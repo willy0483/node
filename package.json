@@ -1,0 +1,12 @@
+{
+  "name": "node",
+  "version": "1.0.0",
+  "description": "Showcase i NodeJS",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "William leander jensen",
+  "type":"module",
+  "license": "ISC"
+}
