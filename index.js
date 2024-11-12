@@ -3,13 +3,11 @@ const app = express();
 
 import dotenv from "dotenv";
 dotenv.config();
-console.log(process.env);
+// console.log(process.env);
 
-const port = process.env.PORT;
-const api_key = process.env.supabase_Key;
-const api_Url = process.env.supabase_Url;
+import { supabase } from "./config/configSupabase.js";
 
-console.log(api_key, api_Url);
+const port = process.env.port;
 
 app.get("/", (req, res) => {
   res.send("Hello World");
@@ -27,6 +25,21 @@ app.get("/produkt", (req, res) => {
   res.send("produkt");
 });
 
+app.get("/test", async (req, res) => {
+  try {
+    const { data, error } = await supabase
+      .from("songs")
+      .select("*,artist_id (name,id),albums_id (title)");
+    if (error) {
+      throw error;
+    }
+    console.log(data);
+    res.send(data);
+  } catch (error) {
+    console.error(error);
+  }
+});
+
 app.listen(port, () => {
   console.log(`
     express køre på port ${port}   
@@ -34,5 +47,6 @@ app.listen(port, () => {
     http://localhost:${port}/about
     http://localhost:${port}/contact
     http://localhost:${port}/produkt
+    http://localhost:${port}/test
     `);
 });
