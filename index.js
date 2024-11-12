@@ -25,7 +25,7 @@ app.get("/produkt", (req, res) => {
   res.send("produkt");
 });
 
-app.get("/test", async (req, res) => {
+app.get("/songs", async (req, res) => {
   try {
     const { data, error } = await supabase
       .from("songs")
@@ -34,7 +34,33 @@ app.get("/test", async (req, res) => {
       throw error;
     }
     console.log(data);
-    res.send(data);
+    res.send(`Success songs`);
+  } catch (error) {
+    console.error(error);
+  }
+});
+
+app.get("/albums", async (req, res) => {
+  try {
+    const { data, error } = await supabase.from("albums").select("*");
+    if (error) {
+      throw error;
+    }
+    console.log(data);
+    res.send(`Success album`);
+  } catch (error) {
+    console.error(error);
+  }
+});
+
+app.get("/artists", async (req, res) => {
+  try {
+    const { data, error } = await supabase.from("artists").select("*");
+    if (error) {
+      throw error;
+    }
+    console.log(data);
+    res.send(`Success artist`);
   } catch (error) {
     console.error(error);
   }
@@ -47,6 +73,8 @@ app.listen(port, () => {
     http://localhost:${port}/about
     http://localhost:${port}/contact
     http://localhost:${port}/produkt
-    http://localhost:${port}/test
+    http://localhost:${port}/songs
+    http://localhost:${port}/albums
+    http://localhost:${port}/artists
     `);
 });
