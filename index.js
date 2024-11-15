@@ -1,80 +1,33 @@
-import express, { request } from "express";
-const app = express();
-
+import express from "express";
 import dotenv from "dotenv";
 dotenv.config();
-// console.log(process.env);
-
-import { supabase } from "./config/configSupabase.js";
 
 const port = process.env.port;
+const app = express();
 
-app.get("/", (req, res) => {
-  res.send("Hello World");
-});
-
-app.get("/about", (req, res) => {
-  res.send("About");
-});
-
-app.get("/contact", (req, res) => {
-  res.send("Contact");
-});
-
-app.get("/produkt", (req, res) => {
-  res.send("produkt");
-});
-
+import { songModel } from "./models/songModel.js";
 app.get("/songs", async (req, res) => {
-  try {
-    const { data, error } = await supabase
-      .from("songs")
-      .select("*,artist_id (name,id),albums_id (title)");
-    if (error) {
-      throw error;
-    }
-    console.log(data);
-    res.send(`Success songs`);
-  } catch (error) {
-    console.error(error);
-  }
+  let songs = await songModel.getAllRecords();
+  console.log(songs);
 });
 
-app.get("/albums", async (req, res) => {
-  try {
-    const { data, error } = await supabase.from("albums").select("*");
-    if (error) {
-      throw error;
-    }
-    console.log(data);
-    res.send(`Success album`);
-  } catch (error) {
-    console.error(error);
-  }
-});
-
+import { artistsModel } from "./models/artistsModel.js";
 app.get("/artists", async (req, res) => {
-  try {
-    const { data, error } = await supabase.from("artists").select("*");
-    if (error) {
-      throw error;
-    }
-    console.log(data);
-    res.send(`Success artist`);
-  } catch (error) {
-    console.error(error);
-  }
+  let artists = await artistsModel.getAllRecords();
+  console.log(artists);
+});
+
+import { albumsModel } from "./models/albumsModel.js";
+app.get("/albums", async (req, res) => {
+  let albums = await albumsModel.getAllRecords();
+  console.log(albums);
 });
 
 app.listen(port, () => {
   console.log(`
     express køre på port ${port}   
-    http://localhost:${port}/
-    http://localhost:${port}/about
-    http://localhost:${port}/contact
-    http://localhost:${port}/produkt
     http://localhost:${port}/songs
-    http://localhost:${port}/albums
     http://localhost:${port}/artists
+    http://localhost:${port}/albums
     `);
 });
