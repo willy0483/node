@@ -1,6 +1,7 @@
 import { supabase } from "../config/configSupabase.js";
 
 export class albumsModel {
+  // get all albums
   static async getAllRecords() {
     try {
       const { data, error } = await supabase
@@ -36,6 +37,11 @@ export class albumsModel {
     }
   };
 
+  /**
+   * create a new album
+   * @param {*} formdata
+   * @returns
+   */
   static createRecord = async (formdata) => {
     try {
       const { data, error } = await supabase

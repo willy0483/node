@@ -40,6 +40,11 @@ export class songModel {
     }
   };
 
+  /**
+   * create a new song
+   * @param {*} formdata
+   * @returns
+   */
   static createRecord = async (formdata) => {
     try {
       const { data, error } = await supabase

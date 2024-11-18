@@ -34,6 +34,11 @@ export class artistsModel {
     }
   };
 
+  /**
+   *  create a new artists
+   * @param {*} formdata
+   * @returns
+   */
   static createRecord = async (formdata) => {
     try {
       const { data, error } = await supabase
