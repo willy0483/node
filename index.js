@@ -1,9 +1,11 @@
-import express from "express";
+import express, { urlencoded } from "express";
 import dotenv from "dotenv";
 dotenv.config();
 
 const port = process.env.port;
 const app = express();
+
+app.use(express.urlencoded({ extended: true }));
 
 import { songController } from "./controllers/songController.js";
 app.use(songController);

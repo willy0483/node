@@ -12,3 +12,9 @@ albumsController.get("/albums/:id([0-9]*)", async (req, res) => {
   const data = await albumsModel.getRecordsById(req.params.id);
   console.log(data.title);
 });
+
+// create a new albums
+albumsController.post("/albums", async (req, res) => {
+  const data = await albumsModel.createRecord(req.body);
+  res.status(201).send(data);
+});

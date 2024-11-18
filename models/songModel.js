@@ -39,4 +39,24 @@ export class songModel {
       console.error(`Fejl: kan ikke hente sangliste, ${error}`);
     }
   };
+
+  static createRecord = async (formdata) => {
+    try {
+      const { data, error } = await supabase
+        .from("songs")
+        .insert({
+          title: formdata.title,
+          content: formdata.content,
+          artist_id: formdata.artist_id,
+        })
+        .select()
+        .single();
+      if (error) {
+        throw new Error(error.message);
+      }
+      return data;
+    } catch (error) {
+      console.error(`Fejl: kan ikke hente sangliste, ${error}`);
+    }
+  };
 }
