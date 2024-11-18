@@ -1,7 +1,11 @@
 import { supabase } from "../config/configSupabase.js";
 
 export class songModel {
-  static async getAllRecords() {
+  /**
+   * Get all records
+   * @returns array
+   */
+  static getAllRecords = async () => {
     try {
       const { data, error } = await supabase
         .from("songs")
@@ -13,5 +17,26 @@ export class songModel {
     } catch (error) {
       console.error(`Fejl: kan ikke hente sangliste, ${error}`);
     }
-  }
+  };
+
+  /**
+   * Function fro get single
+   * @param {number} id
+   * @returns object
+   */
+  static getRecordsById = async (id) => {
+    try {
+      const { data, error } = await supabase
+        .from("songs")
+        .select("*")
+        .eq("id", id)
+        .single();
+      if (error) {
+        throw new Error(error.message);
+      }
+      return data;
+    } catch (error) {
+      console.error(`Fejl: kan ikke hente sangliste, ${error}`);
+    }
+  };
 }

@@ -7,3 +7,8 @@ albumsController.get("/albums", async (req, res) => {
   let data = await albumsModel.getAllRecords();
   res.status(200).send(data);
 });
+
+albumsController.get("/albums/:id([0-9]*)", async (req, res) => {
+  const data = await albumsModel.getRecordsById(req.params.id);
+  console.log(data.title);
+});
