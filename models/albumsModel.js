@@ -12,7 +12,7 @@ export class albumsModel {
       }
       return data;
     } catch (error) {
-      console.error(`Fejl: kan ikke hente sangliste, ${error}`);
+      console.error(`Fejl: kan ikke hente albumliste, ${error}`);
     }
   }
 
@@ -33,7 +33,7 @@ export class albumsModel {
       }
       return data;
     } catch (error) {
-      console.error(`Fejl: kan ikke hente sangliste, ${error}`);
+      console.error(`Fejl: kan ikke hente albumliste, ${error}`);
     }
   };
 
@@ -61,7 +61,33 @@ export class albumsModel {
       }
       return data;
     } catch (error) {
-      console.error(`Fejl: kan ikke hente sangliste, ${error}`);
+      console.error(`Fejl: kan ikke hente albumliste, ${error}`);
+    }
+  };
+
+  /**
+   * update a album
+   * @param {*} formdata
+   * @returns
+   */
+  static updateRecord = async (formdata) => {
+    try {
+      const { data, error } = await supabase
+        .from("albums")
+        .update({
+          title: formdata.title,
+          description: formdata.description,
+          songs_id: formdata.songs_id,
+        })
+        .eq("id", formdata.id)
+        .select()
+        .single();
+      if (error) {
+        throw new Error(error.message);
+      }
+      return data;
+    } catch (error) {
+      console.error(`Fejl: kan ikke hente albumliste, ${error}`);
     }
   };
 }

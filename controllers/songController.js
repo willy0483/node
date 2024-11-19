@@ -6,12 +6,14 @@ export const songController = express.Router();
 // get all songs
 songController.get("/songs", async (req, res) => {
   let data = await songModel.getAllRecords();
+  console.log(data);
   res.status(200).send(data);
 });
 
 // get a single song
 songController.get("/songs/:id([0-9]*)", async (req, res) => {
   const data = await songModel.getRecordsById(req.params.id);
+  console.log(data);
   res.status(200).send(data.title);
 });
 
@@ -19,4 +21,11 @@ songController.get("/songs/:id([0-9]*)", async (req, res) => {
 songController.post("/songs", async (req, res) => {
   const data = await songModel.createRecord(req.body);
   res.status(201).send(data);
+});
+
+// update a song
+songController.put("/songs", async (req, res) => {
+  const data = await songModel.updateRecord(req.body);
+  console.log(req.body);
+  res.status(200).send(data);
 });

@@ -30,7 +30,7 @@ export class artistsModel {
       }
       return data;
     } catch (error) {
-      console.error(`Fejl: kan ikke hente sangliste, ${error}`);
+      console.error(`Fejl: kan ikke hente artistsliste, ${error}`);
     }
   };
 
@@ -55,7 +55,33 @@ export class artistsModel {
       }
       return data;
     } catch (error) {
-      console.error(`Fejl: kan ikke hente sangliste, ${error}`);
+      console.error(`Fejl: kan ikke hente artistsliste, ${error}`);
+    }
+  };
+
+  /**
+   * update a artists
+   * @param {*} formdata
+   * @returns
+   */
+  static updateRecord = async (formdata) => {
+    try {
+      const { data, error } = await supabase
+        .from("artists")
+        .update({
+          name: formdata.name,
+          description: formdata.description,
+          albums_id: formdata.albums_id,
+        })
+        .eq("id", formdata.id)
+        .select()
+        .single();
+      if (error) {
+        throw new Error(error.message);
+      }
+      return data;
+    } catch (error) {
+      console.error(`Fejl: kan ikke hente artistsliste, ${error}`);
     }
   };
 }
