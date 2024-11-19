@@ -11,7 +11,7 @@ export class songModel {
         .from("songs")
         .select("id,title,content,created_at,artist_id(name)");
       if (error) {
-        throw new Error(error.message);
+        throw error;
       }
       return data;
     } catch (error) {
@@ -32,7 +32,7 @@ export class songModel {
         .eq("id", id)
         .single();
       if (error) {
-        throw new Error(error.message);
+        throw error;
       }
       return data;
     } catch (error) {
@@ -57,7 +57,7 @@ export class songModel {
         .select()
         .single();
       if (error) {
-        throw new Error(error.message);
+        throw error;
       }
       return data;
     } catch (error) {
@@ -83,11 +83,30 @@ export class songModel {
         .select()
         .single();
       if (error) {
-        throw new Error(error.message);
+        throw error;
       }
       return data;
     } catch (error) {
       console.error(`Fejl: kan ikke hente sangliste, ${error}`);
+    }
+  };
+
+  /**
+   *
+   * @param {object} formdata
+   */
+  static deleteRecord = async (formdata) => {
+    try {
+      let { data, error } = await supabase
+        .from("songs")
+        .delete()
+        .eq("id", formdata.id);
+      if (error) {
+        throw error;
+      }
+      return data;
+    } catch (error) {
+      console.error(`Fejl: kan ikke slette sang, ${error}`);
     }
   };
 }

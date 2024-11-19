@@ -29,3 +29,10 @@ artistsController.put("/artists", async (req, res) => {
   console.log(data);
   res.status(200).send(data);
 });
+
+// delete a artists
+artistsController.delete("/artists", async (req, res) => {
+  const data = await artistsModel.deleteRecord(req.body);
+  console.log(req.body);
+  res.send(data);
+});

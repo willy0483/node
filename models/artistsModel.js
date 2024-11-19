@@ -26,7 +26,7 @@ export class artistsModel {
         .eq("id", id)
         .single();
       if (error) {
-        throw new Error(error.message);
+        throw error;
       }
       return data;
     } catch (error) {
@@ -51,7 +51,7 @@ export class artistsModel {
         .select()
         .single();
       if (error) {
-        throw new Error(error.message);
+        throw error;
       }
       return data;
     } catch (error) {
@@ -77,11 +77,48 @@ export class artistsModel {
         .select()
         .single();
       if (error) {
-        throw new Error(error.message);
+        throw error;
       }
       return data;
     } catch (error) {
       console.error(`Fejl: kan ikke hente artistsliste, ${error}`);
+    }
+  };
+
+  /**
+   *
+   * @param {object} formdata
+   */
+  static deleteRecord = async (formdata) => {
+    try {
+      let { data, error } = await supabase
+        .from("songs")
+        .delete()
+        .eq("id", formdata.id);
+      if (error) {
+        throw error;
+      }
+      return data;
+    } catch (error) {
+      console.error(`Fejl: kan ikke slette sang, ${error}`);
+    }
+  };
+  /**
+   *
+   * @param {object} formdata
+   */
+  static deleteRecord = async (formdata) => {
+    try {
+      let { data, error } = await supabase
+        .from("artists")
+        .delete()
+        .eq("id", formdata.id);
+      if (error) {
+        throw error;
+      }
+      return data;
+    } catch (error) {
+      console.error(`Fejl: kan ikke slette artists, ${error}`);
     }
   };
 }

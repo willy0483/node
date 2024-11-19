@@ -28,3 +28,10 @@ albumsController.put("/albums", async (req, res) => {
   console.log(data);
   res.status(200).send(data);
 });
+
+// delete a album
+albumsController.delete("/albums", async (req, res) => {
+  const data = await albumsModel.deleteRecord(req.body);
+  console.log(req.body);
+  res.send(data);
+});

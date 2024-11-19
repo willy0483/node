@@ -8,7 +8,7 @@ export class albumsModel {
         .from("albums")
         .select("id,title,description,release_date");
       if (error) {
-        throw new Error(error.message);
+        throw error;
       }
       return data;
     } catch (error) {
@@ -29,7 +29,7 @@ export class albumsModel {
         .eq("id", id)
         .single();
       if (error) {
-        throw new Error(error.message);
+        throw error;
       }
       return data;
     } catch (error) {
@@ -57,7 +57,7 @@ export class albumsModel {
         .select()
         .single();
       if (error) {
-        throw new Error(error.message);
+        throw error;
       }
       return data;
     } catch (error) {
@@ -83,11 +83,30 @@ export class albumsModel {
         .select()
         .single();
       if (error) {
-        throw new Error(error.message);
+        throw error;
       }
       return data;
     } catch (error) {
       console.error(`Fejl: kan ikke hente albumliste, ${error}`);
+    }
+  };
+
+  /**
+   *
+   * @param {object} formdata
+   */
+  static deleteRecord = async (formdata) => {
+    try {
+      let { data, error } = await supabase
+        .from("albums")
+        .delete()
+        .eq("id", formdata.id);
+      if (error) {
+        throw error;
+      }
+      return data;
+    } catch (error) {
+      console.error(`Fejl: kan ikke slette album, ${error}`);
     }
   };
 }
